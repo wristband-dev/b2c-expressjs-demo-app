@@ -6,7 +6,8 @@ export function TouchpointChip() {
     <Chip
       label="Wristband Touchpoint"
       sx={{
-        backgroundColor: '#7de3ff',
+        backgroundColor: '#00ffc1',
+        color: '#0c0c0c',
         fontSize: '0.75rem',
         fontWeight: '600',
         height: '1.75rem',

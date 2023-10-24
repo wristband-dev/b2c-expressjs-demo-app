@@ -60,7 +60,7 @@ exports.login = async (req, res, next) => {
 
     /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
     // Redirect out to the Wristband authorize endpoint to start the login process via OAuth2 Auth Code flow.
-    return res.redirect(`http://${APPLICATION_DOMAIN}/api/v1/oauth2/authorize?${query}`);
+    return res.redirect(`https://${APPLICATION_DOMAIN}/api/v1/oauth2/authorize?${query}`);
   } catch (error) {
     return next(error);
   }
@@ -142,5 +142,5 @@ exports.logout = async (req, res) => {
 
   /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
   // Always perform logout redirect to the Wristband logout endpoint.
-  return res.redirect(`http://${APPLICATION_DOMAIN}/api/v1/logout?client_id=${CLIENT_ID}`);
+  return res.redirect(`https://${APPLICATION_DOMAIN}/api/v1/logout?client_id=${CLIENT_ID}`);
 };

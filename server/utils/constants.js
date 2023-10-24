@@ -5,7 +5,7 @@ const { APPLICATION_DOMAIN, CLIENT_ID, CLIENT_SECRET, DOMAIN_FORMAT } = process.
 exports.IS_LOCALHOST = DOMAIN_FORMAT === 'LOCALHOST';
 exports.INVOTASTIC_HOST = this.IS_LOCALHOST ? 'localhost:6001' : 'app.invotastic.com:6001';
 
-exports.APPLICATION_LOGIN_URL = `http://${APPLICATION_DOMAIN}/login`;
+exports.APPLICATION_LOGIN_URL = `https://${APPLICATION_DOMAIN}/login`;
 exports.AUTH_CALLBACK_URL = `http://${this.INVOTASTIC_HOST}/api/auth/callback`;
 exports.BASIC_AUTH_AXIOS_CONFIG = {
   headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
