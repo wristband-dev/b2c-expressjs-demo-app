@@ -27,6 +27,9 @@ const accessTokenHandler = async function (req, res, next) {
       { retries: 2, minTimeout: 1000, maxTimeout: 1000 }
     );
 
+    // Middleware that "touches" the session cookie to update the max age.
+    // If a token refresh occurred, the new token data will be saved to the session.
+    await req.session.save();
     return next();
   } catch (error) {
     console.error(`Failed to refresh token due to: ${error}`);

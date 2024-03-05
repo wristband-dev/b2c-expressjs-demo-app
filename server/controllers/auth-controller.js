@@ -3,7 +3,12 @@
 const Iron = require('@hapi/iron');
 
 const wristbandService = require('../services/wristband-service');
-const { APPLICATION_LOGIN_URL, AUTH_CALLBACK_URL, INVOTASTIC_HOST } = require('../utils/constants');
+const {
+  APPLICATION_LOGIN_URL,
+  AUTH_CALLBACK_URL,
+  INVOTASTIC_HOST,
+  LOGIN_STATE_COOKIE_SECRET,
+} = require('../utils/constants');
 const {
   clearSessionCookies,
   createCodeChallenge,
@@ -15,8 +20,6 @@ const {
   updateCsrfTokenAndCookie,
   updateLoginStateCookie,
 } = require('../utils/util');
-
-const { APPLICATION_DOMAIN, CLIENT_ID, LOGIN_STATE_COOKIE_SECRET } = process.env;
 
 exports.authState = async (req, res) => {
   const { session } = req;
@@ -48,7 +51,7 @@ exports.login = async (req, res, next) => {
     updateLoginStateCookie(req, res, state, sealedLoginStateData);
 
     const query = toQueryString({
-      client_id: CLIENT_ID,
+      client_id: process.env.CLIENT_ID,
       response_type: 'code',
       redirect_uri: AUTH_CALLBACK_URL,
       state,
@@ -60,7 +63,7 @@ exports.login = async (req, res, next) => {
 
     /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
     // Redirect out to the Wristband authorize endpoint to start the login process via OAuth2 Auth Code flow.
-    return res.redirect(`https://${APPLICATION_DOMAIN}/api/v1/oauth2/authorize?${query}`);
+    return res.redirect(`https://${process.env.APPLICATION_DOMAIN}/api/v1/oauth2/authorize?${query}`);
   } catch (error) {
     return next(error);
   }
@@ -142,5 +145,5 @@ exports.logout = async (req, res) => {
 
   /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
   // Always perform logout redirect to the Wristband logout endpoint.
-  return res.redirect(`https://${APPLICATION_DOMAIN}/api/v1/logout?client_id=${CLIENT_ID}`);
+  return res.redirect(`https://${process.env.APPLICATION_DOMAIN}/api/v1/logout?client_id=${process.env.CLIENT_ID}`);
 };

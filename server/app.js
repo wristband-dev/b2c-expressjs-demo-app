@@ -2,15 +2,14 @@
 
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const { ironSession } = require('iron-session/express');
 const moment = require('moment');
 const path = require('path');
 
+const ironSession = require('./middleware/init-iron-session');
 const errorHandler = require('./middleware/error-handler');
 const routes = require('./routes/index');
-const { SESSION_COOKIE_NAME } = require('./utils/constants');
+const { SESSION_COOKIE_NAME, SESSION_COOKIE_SECRET } = require('./utils/constants');
 
-const { NODE_ENV, SESSION_COOKIE_SECRET } = process.env;
 const app = express();
 
 app.use(express.json());
@@ -35,7 +34,7 @@ const session = ironSession({
 app.use('/api', session, routes);
 
 // Serve static assets if in production mode.
-if (NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   console.info('Production ENV detected. Serving up static assets.');
   app.use(express.static(path.join(__dirname, 'dist')));
   app.get('*', (req, res) => {

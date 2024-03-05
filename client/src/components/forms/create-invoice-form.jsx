@@ -24,8 +24,7 @@ export function CreateInvoiceForm({ closeFormDialog, fireConfetti }) {
     }
   });
 
-  const onEmojiClick = (event, emojiObject) => {
-    event.preventDefault();
+  const onEmojiClick = (emojiObject) => {
     onMessageChange(message + emojiObject.emoji);
   };
 
